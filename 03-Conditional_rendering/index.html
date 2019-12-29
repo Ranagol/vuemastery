@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Vue</title>
+</head>
+<body>
+
+  <div class="nav-bar"></div>
+
+  <div id="app">
+
+    <div class="product">
+      <div class="product-image">
+        <img v-bind:src="image" height="100" width="100">
+        
+      </div>
+
+      <div class="product-info">
+        <h1>{{ product }}</h1>
+
+        <p v-if='inventory>10' >In stock 
+          <span v-show = 'onSale'>
+            , and it is on sale!
+          </span>
+        </p><!--if this is true, we want to see 'in stock'.-->
+
+        <p v-else-if='inventory<=10 && inventory>0' >Almost sold out</p><!--else if the stock is between 10 and 1 then show this -->
+
+        <p v-else>Out of stock</p><!--else, if this is false, we want to see 'Out of stock'-->
+
+        <p v-show = 'holiday'>This is a holiday discount!</p><!--in simple cases, when we want to see an element in case of true, and we don't want to see this element in case of false, we can use v-show. Now, v-if will add or remove elements from the DOM. v-show will only hide or display an element-->
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><!--we copied this from vuejs.org, the official Vue page. This installs Vue.-->
+  <script src="main.js"></script>
+</body>
+</html>

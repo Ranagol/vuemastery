@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Vue</title>
+</head>
+<body>
+
+  <div class="nav-bar"></div>
+
+  <div id="app">
+  <!--Computed properties are cached, meaning the result is saved until its dependencies change. So when quantity changes, the cache will be cleared and the **next time you access the value of inStock , it will return a fresh result, and cache that result.
+
+  With that in mind, it’s more efficient to use a computed property rather than a method for an expensive operation that you don’t want to re-run every time you access it.-->
+
+    <div class="product">
+      <div class="product-image">
+        <img v-bind:src="image"><!-- the image is now in the computed property, under image()!! So, here we are calling now a computer property!-->
+      </div>
+
+      <!--we want to echo our brand and product with computed properties as one string.-->
+      <div class="product-info">
+        <h1>{{ title }}</h1> <!--We will call this title. The title() is a function in the computed object. This is how we can use the computed properties in a very simple but not practical example. It is unpractical because we could have done this with just a simple concatination. But this is just an example-->
+
+        <p v-if='inStock'>In stock</p>
+        <p v-else :class = '{ noSocks: !inStock }'>Out of stock</p>
+        <!--This is tricky. Here, v-if should react to true or false. But. inStock is numerical, it has numbers in stead of true/false. Why is this still working?. It is because of the truthy and falsey. -->
+
+        <!--Now when we hover on the blue variant, which has a quantity of zero, inStock will evaluate to false since 0 is “falsey”, so we’ll now see 'Out of Stock' to appear. When we hoover over green socks, which we have 10, 10 is truthy, so the 'In stock' option will be activated.
+
+        .noSocks is a CSS class, that will make the text crossed, if inStock is false
+
+        .noSocks {
+          text-decoration: line-through;
+        }
+
+        -->
+
+        <p v-if = 'onSale'> {{ onSaleMethod }}</p>
+        <!-- if onSale = true, echo onSaleMEthod-->
+
+        <ul>
+          <li v-for = 'detail in details'>{{detail}}</li>
+        </ul>
+
+        <!--HOOVERING HAPPENS HERE, BELOW-->
+        <div v-for = '(variant, index) in variants' 
+          :key = 'variant.variantId' 
+          class = 'color-box' 
+          :style = '{ backgroundColor: variant.variantColor }' 
+          @mouseover = 'updateProduct(index)'> 
+        </div>
+        <!--we’ll be setting selectedVariant based on the index that we hover on (green variant has index 0, blue variant has index 1, because in the variants array green has 0 position, blue has 1 position).
+
+        We can add index to our v-for here, like so. So now both variants have their index number. We pass this index as an argument through the 'updateProduct(index)' back to Vue, when the hoovering happens-->
+
+        <button v-on:click = 'addToCart'
+          :disabled = '!inStock'
+          :class = '{ disabledButton: !inStock }'
+          >Add to cart</button>
+        <div class="cart">
+          <!--our 'addToCart' button is still conditionally turning gray whenever inStock is false (when it is 0, that is falsey in JavaScript, which means false)-->
+
+          <p>Cart {{ cart }}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

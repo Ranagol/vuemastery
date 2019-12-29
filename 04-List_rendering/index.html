@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Vue</title>
+</head>
+<body>
+
+  <div class="nav-bar"></div>
+
+  <div id="app">
+
+    <div class="product">
+      <div class="product-image">
+        <img v-bind:src="image" height="100" width="100">
+        
+      </div>
+
+      <div class="product-info">
+        <h1>{{ product }}</h1>
+
+        <p v-if='inventory > 10'>In stock</p>
+        <p v-else-if='inventory <=10 && inventory > 0'>Almost sold out</pv-else-if>
+        <p v-else>Out of stock</p>
+
+        <ul>
+          <li v-for = 'detail in details'>{{detail}}</li><!--v-for loops through our array. Note the reversed order 'detail in details' in comparison with the standard foreach loop. Details is the name of our array in our js file, and detail is every looped element, that will be echoed. Basically, this is a simple looping with v-for.-->
+        </ul>
+
+        <ul>
+          <li v-for = 'size in sizes'>{{size}}</li>
+        </ul>
+
+        <!--WE WILL HERE JUST ECHO THE COLORS FOR BOTH OBJECTS-->
+        <div v-for = 'variant in variants' :key = 'variant.variantId'>
+          <!--here we use a special key attribute (we are binding this key to the variant. Because : = v-bind, don't forget.), so that Vue could keep track of each nodes identity. Possibly this has something to do with the standard array key&value pairs?-->
+
+          <p>{{ variant.variantColor }}</p><!--Let’s display the color of each variant. We can loop over an array of objects and use dot notation to display values from the objects. If we wrote {{ variant }} we’d display the entire object.-->
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><!--we copied this from vuejs.org, the official Vue page. This installs Vue.-->
+  <script src="main.js"></script>
+</body>
+</html>

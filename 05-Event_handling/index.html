@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Vue</title>
+</head>
+<body>
+
+  <div class="nav-bar"></div>
+
+<div id="app">
+
+  <div class="product">
+    <div class="product-image">
+
+      <!--We want to be able to hover our mouse over a variant’s color and have its variantImage show up where our product image currently is. -->
+      <img v-bind:src="image">
+
+    </div>
+
+    <div class="product-info">
+      <h1>{{ product }}</h1>
+
+      <p v-if='inventory > 10'>In stock</p>
+      <p v-else-if='inventory <=10 && inventory > 0'>Almost sold out</pv-else-if>
+      <p v-else>Out of stock</p>
+
+      <ul>
+        <li v-for = 'detail in details'>{{detail}}</li>
+      </ul>
+
+      <div v-for = 'variant in variants' :key = 'variant.variantId'><!--this div is showing to us the 'green' or 'blue' string in the DOM.-->
+
+        <p @mouseover = 'updateProduct(variant.variantImage)'>{{ variant.variantColor }}</p> <!--If we hoover over the echoed 'blue' (this is the mouseover event), we want to see the blue sock image, if we hoover over the 'green', we want to see the green sock (in the product-image div). So we plant here an event listener. Short for v-on is @. If this hoovering happens, activate the updateProduct() method.-->
+        <!--How does Vue know which sock image to show? There is green and blue variant. Whatever variant we use, our function is taking an argument: the variant.variantImage for example is 'bluesocks.png', if we hoover over the 'blue'.-->
+      </div>
+
+      <!--We want to have a button that increments the number of items in our cart.-->
+      <button v-on:click = 'addToCart'>Add to cart</button><!--v-on:click listens to clicks on this button. If click happens, v-on:click activates the addToCart method, which will increase the cart with 1 .-->
+
+      <button v-on:click = 'removeFromCart'>Remove from cart</button>
+
+      <div class="cart">
+        <p>Cart {{ cart }}</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><!--we copied this from vuejs.org, the official Vue page. This installs Vue.-->
+  <script src="main.js"></script>
+</body>
+</html>

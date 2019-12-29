@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Vue</title>
+</head>
+<body>
+
+  <div class="nav-bar"></div>
+
+  <div id="app">
+
+    <div class="product">
+      <div class="product-image">
+        <img v-bind:src="image">
+      </div>
+
+      <div class="product-info">
+        <h1>{{ product }}</h1>
+
+        <p v-if='inStock'>In stock</p>
+        <p v-else :class = '{ noSocks: !inStock }'>Out of stock</p>
+        
+        <ul>
+          <li v-for = 'detail in details'>{{detail}}</li>
+        </ul>
+
+        <!--EXAMPLE FOR STYLE BINDING: we are binding 2 divs to be green or blue.-->
+        <!--Our first goal in this lesson is to use our variant colors to style the background-color of divs. Since our variant colors are “green” and “blue”, we want a div with a green background-color and a div with a blue background-color.-->
+
+        <div v-for = 'variant in variants' 
+          :key = 'variant.variantId' 
+          class = 'color-box' 
+          :style = '{ backgroundColor: variant.variantColor }' 
+          @mouseover = 'updateProduct(variant.variantImage)'
+          > <!--This will create 2 divs, one blue div, and one green div. 
+          
+          With the :style we are binding a style attribute: we want our div to be colored by the CSS in variantColor, which is 'blue' or 'green'.. 
+
+          Our goal: instead of string 'blue' and 'green' (what we had so far) in the DOM, we want to hoover for the purpose of color changing above the green square (which is a div) or the blue square.
+          
+          Note: with the v-for we have just looped out all variables, objects, arrays from 'variant' objects. So, the variant.variantImage is here too, freshly looped out.
+
+          If it is here, we can use it.
+
+          That is why we can use the variantImage as an argument with the updateProduct().
+          -->
+        </div>
+
+        <!-- EXAMPLE FOR CLASS BINDING-->
+        <!--Problem: we should not be able to add to cart, if we don't have socks on stock (if the inStock is false).-->
+        <button v-on:click = 'addToCart'
+          :disabled = '!inStock'
+          :class = '{ disabledButton: !inStock }'
+          >Add to cart</button>
+          <!-- The 'disabled' is a html attribute, that will disable a html element. We want to disable this button, if inStock is false. This will be a simple v-bind (or :) job. If the inStock is false, activate the disabled attribute for this button.
+          So we are binding our :disabled attribute to our inStock data.  Notice the '!', which means 'not in stock', or false. This way our button will be disabled IF socks are not on stock, and we won't be able to click on the button. 
+          THE CLASS BINDING STARTS HERE:
+          If the button is disabled, we want it to look like an unclickable, disabled button. So this is a style/CSS job now, which will be done with class binding (this part here: :class). This button will have a disableButton class, whenever the inStock is not true. The disableButton class is a class from CSS, and it looks like this:
+        
+          .disabledButton {
+            background-color: #d8d8d8;
+          }
+
+          So, if the inStock is false, then activate the .disabledButton class for our button.
+          -->
+
+        <div class="cart">
+          <p>Cart {{ cart }}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

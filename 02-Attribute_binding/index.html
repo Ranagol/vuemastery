@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Vue</title>
+</head>
+<body>
+
+  <div class="nav-bar"></div>
+
+  <div id="app">
+
+    <div class="product">
+      <div class="product-image">
+        <img v-bind:src="image" height="100" width="100"><!--V-bind creates a dynamic bond between our data in js (image: ...) and the attribute in html. If this picture changes, we want it to be updated. V-bind is like glue. Now, there is a short version for V-bind, and that is ":", instead of "v-bind:". In case of this image, notice that we did not source from our folders, we sourced it from our JS file, from the Vue object. The Vue is doing the image sourcing from the folders. -->
+      </div>
+
+      <div class="product-info">
+        <h1>{{ product }}</h1>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><!--we copied this from vuejs.org, the official Vue page. This installs Vue.-->
+  <script src="main.js"></script>
+</body>
+</html>
